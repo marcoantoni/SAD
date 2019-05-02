@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang='en'>
+
+<head>
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta http-equiv='X-UA-Compatible' content='ie=edge'>
+
+    <title>gpu.js demo</title>
+ 	<script src="bin/gpu-browser.min.js"></script>
+    <script type="text/javascript">
+    
+    const opt = {
+        output: [1]
+    };
+
+	const gpu = new GPU({mode: 'webgl'});
+    
+    const multiplyMatrix = gpu.createKernel(function() {
+        const r = 1;
+        const points_total = 0;
+        const points_inside = 0;
+        const status = 1;
+
+        while (this.constants.attempts != points_total){
+            points_total++;
+
+            let x = Math.random();
+	        let y = Math.random();
+
+	        if (Math.pow(x, 2) + Math.pow(y, 2) <= 1)
+	            points_inside++;
+
+        } 
+        return 4 * (points_inside / points_total);
+        // limite 100000000 definido em gpu.browser.js -> _getLoopMaxString()
+    }, {
+      constants: { attempts: 100000000 },
+      output: [1],
+    });
+   multiplyMatrix.setDebug(true);
+
+
+    //GPU
+    const startGPU = window.performance.now();
+    const result = multiplyMatrix();
+    const endGPU = window.performance.now();
+    const gpuTime = endGPU - startGPU;
+    console.log('GPU: ' + gpuTime);
+    console.log(result);
+
+     </script>
+</head>
+
+<body>
+    Server ok
+</body>
+
+</html>

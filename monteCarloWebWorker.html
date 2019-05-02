@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+</head>
+<body>
+	<script>
+
+		var workers = [];
+		var totalAttempts = 100000000;
+		var nWorkers = 4;
+		var attemptsByWorker = totalAttempts / nWorkers;
+		var resta = nWorkers;
+		var t0, t1;
+		var terminou = false;
+
+		var points_total_worker = 0;
+		var points_inside_worker = 0;
+		var pi;
+
+		t0 = performance.now();   
+		for (var i=0; i < nWorkers; i++){
+			workers[i] = new Worker('WorkerPI.js');
+
+			workers[i].postMessage({'attempts': attemptsByWorker });
+
+			workers[i].onmessage = function(e) {
+				console.log("onmessage = " + e.data.points_inside);
+				points_inside_worker += e.data.points_inside;
+
+				resta--;
+				// todos os workers foram executados
+				if (resta == 0) {
+					t1 = performance.now();
+					tempo = t1 - t0;
+					console.log('Tempo de execução: ' + tempo);
+
+					pi = 4 * (points_inside_worker / totalAttempts);
+					console.log("pi = " + pi);
+
+					for (var i=0; i < nWorkers; i++) {
+						workers[i].terminate();
+					}
+
+
+				}
+			}
+
+			workers[i].onerror = function(e) {
+				console.log('worker.onerror');
+				console.log('linha ' + e.lineno + ' em ' + e.filename);
+			}
+		}
+
+		/*worker = new Worker('WorkerPI.js');
+		var t0 = performance.now();
+		worker.postMessage({'start': true, 'attempts': 100000000 });
+
+
+		worker.onmessage = function(e) {
+			var t1 = performance.now();
+			console.log('Points total / inside' + e.data.points_total + ' ' + e.data.points_inside + '. PI = ' + e.data.pi);
+			var cpuTime = t1 - t0;
+			console.log("Time is: " + cpuTime);
+			worker.terminate();
+		}*/
+	</script>
+	
+</body>
+</html>
