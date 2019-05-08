@@ -1,7 +1,4 @@
-[![Logo](http://gpu.rocks/img/ogimage.png)](http://gpu.rocks/)
-
-
-# GPU.js
+# Prática de POO
 GPU.js is a JavaScript Acceleration library for GPGPU (General purpose computing on GPUs) in JavaScript for Web and Node.
 GPU.js automatically transpiles simple JavaScript functions into shader language and compiles them so they run on your GPU.
 In case a GPU is not available, the functions will still run in regular JavaScript.
