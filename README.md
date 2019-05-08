@@ -1,7 +1,7 @@
 # Prática de POO
-GPU.js is a JavaScript Acceleration library for GPGPU (General purpose computing on GPUs) in JavaScript for Web and Node.
-GPU.js automatically transpiles simple JavaScript functions into shader language and compiles them so they run on your GPU.
-In case a GPU is not available, the functions will still run in regular JavaScript.
+Para começar, baixe o arquivo [Data.java](http://gpu.rocks/playground)
+
+## Acrescente os atributos mes e ano do tipo int seguindo a estrutura da classe
 
 
 [![Join the chat at https://gitter.im/gpujs/gpu.js](https://badges.gitter.im/gpujs/gpu.js.svg)](https://gitter.im/gpujs/gpu.js?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
